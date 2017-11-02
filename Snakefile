@@ -1,6 +1,6 @@
 rule all:
     input:
-        expand('output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R{direction}_{lane}_trim.fastq',
+        expand('output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R{direction}_00{lane}_trim.fastq',
                 direction=[1,2],
                lane=range(1,7))
 
