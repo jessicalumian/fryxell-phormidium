@@ -1,0 +1,2 @@
+module unload python python3
+export PATH=/home/jemizzi/miniconda3/bin:$PATH
