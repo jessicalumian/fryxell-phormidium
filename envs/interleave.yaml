@@ -1,0 +1,5 @@
+channels:
+ - bioconda
+dependencies:
+ - python=2.7.6
+ - khmer=2.1.2
