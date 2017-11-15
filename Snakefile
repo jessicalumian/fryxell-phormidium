@@ -22,10 +22,8 @@ rule download_adapters:
 
 rule trimmomatic_lab_sample:
     input:
-        forward=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}.fastq',
-                        lane=range(1,7)),
-        reverse=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}.fastq',
-                        lane=range(1,7)),
+        forward='input/lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}.fastq',
+        reverse='input/lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}.fastq',
         adapters='input/TruSeq3-PE-2.fa'
     output:
         forward_paired='output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}_paired_trim.fastq',
@@ -43,16 +41,13 @@ rule trimmomatic_lab_sample:
 
 rule interleave_lab_sample:
     input:
-        forward_paired=expand('output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}_paired_trim.fastq',
-                               lane=range(1,7)),
-        reverse_paired=expand('output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}_paired_trim.fastq',
-                               lane=range(1,7))
+        forward_paired='output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}_paired_trim.fastq',
+        reverse_paired='output/trimmomatic_lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}_paired_trim.fastq'
     output:
-        interleave_out=expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
-                               lane=range(1,7))
+        interleave_out='output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq'
     message:
         'Interleaving {input.forward_paired} and {input.reverse_paired}'
     conda:
         'envs/interleave.yaml'
     shell: '''
-        interleave-reads.py {input.forward_paired} {input.reverse_paired} {output.interleave_out} '''
+        interleave-reads.py {input.forward_paired} {input.reverse_paired} -o {output.interleave_out} '''
