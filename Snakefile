@@ -1,6 +1,8 @@
 rule all:
     input:
-        'output/megahit_lab_sample/final.contigs.fa'
+        'output/megahit_lab/final.contigs.fa',
+        'output/megahit_mat/final.contigs.fa',
+        'output_megahit_coassembly/final.contigs.fa'
 
 rule fastqc_reads:
     input:
@@ -51,16 +53,52 @@ rule interleave_lab_sample:
     shell: '''
         interleave-reads.py {input.forward_paired} {input.reverse_paired} -o {output.interleave_out} '''
 
-rule assemble_lab_sample:
+rule assemble_lab:
     input: 
-        expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
+        expand('output/interleave_lab/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
                 lane=range(1,7))
     output:
-        'output/megahit_lab_sample/final.contigs.fa'
+        'output/megahit_lab/final.contigs.fa'
     conda:
         'envs/megahit.yaml'
     params:
         input_list=lambda w, input: ','.join(input)
     shell: '''
-        rmdir output/megahit_lab_sample
-        megahit --12 {params.input_list} -o output/megahit_lab_sample '''
+        rmdir output/megahit_lab
+        megahit --12 {params.input_list} -o output/megahit_lab '''
+
+rule assemble_mat:
+    input:
+        'input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
+    output:
+        'output/megahit_mat/final.contigs.fa'
+    conda:
+        'envs/megahit.yaml'
+    shell: '''
+        rmdir outupt/megahit_lab
+        megahit --12 {input} -o output/megahit_mat '''
+
+rule coassembly:
+    input:
+        expand('output/interleave_lab/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
+                lane=range(1,7)),
+        'input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
+    output:
+        'output_megahit_coassembly/final.contigs.fa'
+    conda:
+        'envs/megahit.yaml'
+    params:
+        input_list=lambda w, input: ','.join(input)
+    shell: '''
+        rmdir output/megahit_coassembly
+        megahit --12 {params.input_list} -o output/megahit_coassembly '''
+
+rule binning:
+    input:
+        'output_megahit_lab/final.contigs.fa',
+        'output_megahit_mat/final.contigs.fa',
+        'output_megahit_coassembly/final.contigs.fa'
+    output:
+       dynamic("{binid}.bin.file")
+    conda:
+        'envs/metabat.yaml'
