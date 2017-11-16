@@ -1,7 +1,6 @@
 rule all:
     input:
-        interleave_out=expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
-                               lane=range(1,7))
+        'output/megahit_lab_sample/final.contigs.fa'
 
 rule fastqc_reads:
     input:
@@ -51,3 +50,17 @@ rule interleave_lab_sample:
         'envs/interleave.yaml'
     shell: '''
         interleave-reads.py {input.forward_paired} {input.reverse_paired} -o {output.interleave_out} '''
+
+rule assemble_lab_sample:
+    input: 
+        expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
+                lane=range(1,7))
+    output:
+        'output/megahit_lab_sample/final.contigs.fa'
+    conda:
+        'envs/megahit.yaml'
+    params:
+        input_list=lambda w, input: ','.join(input)
+    shell: '''
+        rmdir output/megahit_lab_sample
+        megahit --12 {params.input_list} -o output/megahit_lab_sample '''
