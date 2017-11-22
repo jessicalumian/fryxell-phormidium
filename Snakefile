@@ -2,7 +2,7 @@ rule all:
     input:
         'output/megahit_lab/final.contigs.fa',
         'output/megahit_mat/final.contigs.fa',
-        'output_megahit_coassembly/final.contigs.fa'
+        'output/megahit_coassembly/final.contigs.fa'
 
 rule fastqc_reads:
     input:
@@ -12,8 +12,8 @@ rule fastqc_reads:
         'output/fastqc_reads/{sample}/{filename}_R{direction}_{lane}_fastqc.zip',
     shell: '''
         module load fastqc/0.11.5
-        fastqc -o `dirname {output[0]}` {input}
-    '''
+        fastqc -o `dirname {output[0]}` {input} '''
+
 rule download_adapters:
     output:
         adapters='input/TruSeq3-PE-2.fa'
@@ -55,7 +55,7 @@ rule interleave_lab_sample:
 
 rule assemble_lab:
     input: 
-        expand('output/interleave_lab/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
+        expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
                 lane=range(1,7))
     output:
         'output/megahit_lab/final.contigs.fa'
@@ -75,16 +75,16 @@ rule assemble_mat:
     conda:
         'envs/megahit.yaml'
     shell: '''
-        rmdir outupt/megahit_lab
+        rmdir outupt/megahit_mat
         megahit --12 {input} -o output/megahit_mat '''
 
 rule coassembly:
     input:
-        expand('output/interleave_lab/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
+        expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
                 lane=range(1,7)),
         'input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
     output:
-        'output_megahit_coassembly/final.contigs.fa'
+        'output/megahit_coassembly/final.contigs.fa'
     conda:
         'envs/megahit.yaml'
     params:
@@ -92,13 +92,3 @@ rule coassembly:
     shell: '''
         rmdir output/megahit_coassembly
         megahit --12 {params.input_list} -o output/megahit_coassembly '''
-
-rule binning:
-    input:
-        'output_megahit_lab/final.contigs.fa',
-        'output_megahit_mat/final.contigs.fa',
-        'output_megahit_coassembly/final.contigs.fa'
-    output:
-       dynamic("{binid}.bin.file")
-    conda:
-        'envs/metabat.yaml'
