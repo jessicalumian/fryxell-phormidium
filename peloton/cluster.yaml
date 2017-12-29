@@ -1,0 +1,19 @@
+__default__:
+    mem: 1G
+    time: '01:00:00'
+
+trimmomatic_lab_sample:
+    mem: 6G
+    time: '02:00:00'
+
+assemble_lab:
+    mem: 5G
+    time: '10:00:00'
+
+assemble_mat:
+    mem: 2G
+    time: '05:00:00'
+
+coassembly:
+    mem: 8G
+    time: '15:00:00'

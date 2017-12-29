@@ -1,0 +1,30 @@
+==========================================
+SLURM_JOB_ID = 769008
+SLURM_NODELIST = c4-66
+CUDA_VISIBLE_DEVICES = NoDevFiles
+==========================================
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'anaconda'
+/var/spool/slurmd/job769008/slurm_script: line 7: activate: No such file or directory
+/var/spool/slurmd/job769008/slurm_script: line 16: snakemake: command not found
+
+===========================================================================
+Job Finished
+
+Name                : allocation
+User                : jemizzi
+Partition           : 
+Nodes               : c4-66
+Cores               : 1
+State               : FAILED
+Submit              : 2017-12-29T13:59:02
+Start               : 2017-12-29T13:59:06
+End                 : 2017-12-29T13:59:07
+Reserved walltime   : --
+Used walltime       : 00:00:01
+Used CPU time       : --
+% User (Computation): 38.89%
+% System (I/O)      : 61.11%
+Mem reserved        : 0/node
+Max Mem used        : 0.00  (c4-66)
+Max Disk Write      : 0.00  (c4-66)
+Max Disk Read       : 0.00  (c4-66)
