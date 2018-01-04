@@ -1,16 +1,20 @@
-logdir=phormidium/log
+#!/bin/bash
+
+logdir=peloton/log
 mkdir -p $logdir
 
-SUB="sbatch -p shared -A m342 -N 1 -n {threads} "
-SUB="$SUB -t {cluster.time} --mem={cluster.mem}"
-SUB="$SUB -o $logdir -e $logdir"
+source modules.pel
+
+SBATCH="sbatch -N 1 -n {threads}"
+SBATCH="$SBATCH -t {cluster.time} --mem={cluster.mem}"
+SBATCH="$SBATCH -o peloton/log/o-%j -e peloton/log/e-%j"
 
 snakemake                                    \
-    -j 3000                                  \
-    --cluster-config phormidium/cluster.yaml \
-    --js phormidium/jobscript.sh             \
+    -j 1000                                  \
+    --cluster-config peloton/cluster.yaml    \
+    --js peloton/jobscript.sh                \
     --rerun-incomplete                       \
     --keep-going                             \
     --latency-wait 10                        \
     --use-conda                              \
-    --cluster "$SUB" $@
+    --cluster "$SBATCH" $@

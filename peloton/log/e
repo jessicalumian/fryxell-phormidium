@@ -1,0 +1,92 @@
+[Wed Jan  3 15:48:20 2018] Building DAG of jobs...
+[Wed Jan  3 15:48:20 2018] Building DAG of jobs...
+[Wed Jan  3 15:48:20 2018] Provided cores: 2
+[Wed Jan  3 15:48:20 2018] Rules claiming more threads will be scaled down.
+[Wed Jan  3 15:48:20 2018] Job counts:
+[Wed Jan  3 15:48:20 2018] 	count	jobs
+[Wed Jan  3 15:48:20 2018] 	1	assemble_mat
+[Wed Jan  3 15:48:20 2018] 	1
+
+[Wed Jan  3 15:48:20 2018] rule assemble_mat:
+[Wed Jan  3 15:48:20 2018]     input: input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq
+[Wed Jan  3 15:48:20 2018]     output: output/megahit_mat/final.contigs.fa
+[Wed Jan  3 15:48:20 2018]     jobid: 0
+
+[Wed Jan  3 15:48:20 2018] Provided cores: 4
+[Wed Jan  3 15:48:20 2018] Rules claiming more threads will be scaled down.
+[Wed Jan  3 15:48:20 2018] Job counts:
+[Wed Jan  3 15:48:20 2018] 	count	jobs
+[Wed Jan  3 15:48:20 2018] 	1	assemble_lab
+[Wed Jan  3 15:48:20 2018] 	1
+[Wed Jan  3 15:48:20 2018] Activating conda environment /home/jemizzi/phormidium/.snakemake/conda/05b24eaf.
+
+[Wed Jan  3 15:48:20 2018] rule assemble_lab:
+[Wed Jan  3 15:48:20 2018]     input: output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_001_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_002_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_003_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_004_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_005_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_006_paired_trim_interleaved.fastq
+[Wed Jan  3 15:48:20 2018]     output: output/megahit_lab/final.contigs.fa
+[Wed Jan  3 15:48:20 2018]     jobid: 0
+
+[Wed Jan  3 15:48:20 2018] Activating conda environment /home/jemizzi/phormidium/.snakemake/conda/05b24eaf.
+62.811Gb memory in total.
+Using: 56.53Gb.
+MEGAHIT v1.1.2
+--- [Wed Jan  3 15:48:22 2018] Start assembly. Number of CPU threads 32 ---
+--- [Wed Jan  3 15:48:22 2018] Available memory: 67442937856, used: 60698644070
+--- [Wed Jan  3 15:48:22 2018] Converting reads to binaries ---
+62.811Gb memory in total.
+Using: 56.53Gb.
+MEGAHIT v1.1.2
+--- [Wed Jan  3 15:48:22 2018] Start assembly. Number of CPU threads 32 ---
+--- [Wed Jan  3 15:48:22 2018] Available memory: 67442937856, used: 60698644070
+--- [Wed Jan  3 15:48:22 2018] Converting reads to binaries ---
+b'    [read_lib_functions-inl.h  : 209]     Lib 0 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_001_paired_trim_interleaved.fastq): interleaved, 7743452 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 0 (input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq): interleaved, 3911904 reads, 490 max length'
+b'    [utils.h                   : 126]     Real: 9.9695\tuser: 8.3922\tsys: 0.8313\tmaxrss: 148928'
+--- [Wed Jan  3 15:48:32 2018] k list: 21,29,39,59,79,99,119,141 ---
+--- [Wed Jan  3 15:48:32 2018] Extracting solid (k+1)-mers for k = 21 ---
+b'    [read_lib_functions-inl.h  : 209]     Lib 1 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_002_paired_trim_interleaved.fastq): interleaved, 7726636 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 2 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_003_paired_trim_interleaved.fastq): interleaved, 7749914 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 3 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_004_paired_trim_interleaved.fastq): interleaved, 7689426 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 4 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_005_paired_trim_interleaved.fastq): interleaved, 7705540 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 5 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_006_paired_trim_interleaved.fastq): interleaved, 6970436 reads, 101 max length'
+b'    [utils.h                   : 126]     Real: 53.9236\tuser: 44.7233\tsys: 3.0705\tmaxrss: 155328'
+--- [Wed Jan  3 15:49:16 2018] k-max reset to: 119 ---
+--- [Wed Jan  3 15:49:16 2018] k list: 21,29,39,59,79,99,119 ---
+--- [Wed Jan  3 15:49:16 2018] Extracting solid (k+1)-mers for k = 21 ---
+--- [Wed Jan  3 15:52:19 2018] Building graph for k = 21 ---
+Error occurs when running "builder build" for k = 21; please refer to output/megahit_mat/log for detail
+[Exit code -7]
+[Wed Jan  3 15:52:19 2018] Error in rule assemble_mat:
+[Wed Jan  3 15:52:19 2018]     jobid: 0
+[Wed Jan  3 15:52:19 2018]     output: output/megahit_mat/final.contigs.fa
+
+[Wed Jan  3 15:52:19 2018] RuleException:
+[Wed Jan  3 15:52:19 2018] CalledProcessError in line 77 of /home/jemizzi/phormidium/Snakefile:
+[Wed Jan  3 15:52:19 2018] Command 'source activate /home/jemizzi/phormidium/.snakemake/conda/05b24eaf; set -euo pipefail;  
+[Wed Jan  3 15:52:19 2018]         rmdir output/megahit_mat
+[Wed Jan  3 15:52:19 2018]         megahit --12 input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq -o output/megahit_mat ' returned non-zero exit status 249.
+[Wed Jan  3 15:52:19 2018]   File "/home/jemizzi/phormidium/Snakefile", line 77, in __rule_assemble_mat
+[Wed Jan  3 15:52:19 2018]   File "/home/jemizzi/miniconda3/lib/python3.6/concurrent/futures/thread.py", line 55, in run
+[Wed Jan  3 15:52:19 2018] Will exit after finishing currently running jobs.
+[Wed Jan  3 15:52:19 2018] Exiting because a job execution failed. Look above for error message
+[Wed Jan  3 15:52:19 2018] Complete log: .snakemake/log/2018-01-03T154431.939366.snakemake.log
+--- [Wed Jan  3 15:53:29 2018] Building graph for k = 21 ---
+Error occurs when running "builder build" for k = 21; please refer to output/megahit_lab/log for detail
+[Exit code -7]
+[Wed Jan  3 15:53:29 2018] Error in rule assemble_lab:
+[Wed Jan  3 15:53:29 2018]     jobid: 0
+[Wed Jan  3 15:53:29 2018]     output: output/megahit_lab/final.contigs.fa
+
+[Wed Jan  3 15:53:29 2018] RuleException:
+[Wed Jan  3 15:53:29 2018] CalledProcessError in line 66 of /home/jemizzi/phormidium/Snakefile:
+[Wed Jan  3 15:53:29 2018] Command 'source activate /home/jemizzi/phormidium/.snakemake/conda/05b24eaf; set -euo pipefail;  
+[Wed Jan  3 15:53:29 2018]         rmdir output/megahit_lab
+[Wed Jan  3 15:53:29 2018]         megahit --12 output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_001_paired_trim_interleaved.fastq,output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_002_paired_trim_interleaved.fastq,output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_003_paired_trim_interleaved.fastq,output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_004_paired_trim_interleaved.fastq,output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_005_paired_trim_interleaved.fastq,output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_006_paired_trim_interleaved.fastq -o output/megahit_lab ' returned non-zero exit status 249.
+[Wed Jan  3 15:53:29 2018]   File "/home/jemizzi/phormidium/Snakefile", line 66, in __rule_assemble_lab
+[Wed Jan  3 15:53:29 2018]   File "/home/jemizzi/miniconda3/lib/python3.6/concurrent/futures/thread.py", line 55, in run
+[Wed Jan  3 15:53:29 2018] Will exit after finishing currently running jobs.
+[Wed Jan  3 15:53:29 2018] Exiting because a job execution failed. Look above for error message
+[Wed Jan  3 15:53:29 2018] Complete log: .snakemake/log/2018-01-03T154123.535613.snakemake.log
+--- [Wed Jan  3 15:54:41 2018] Building graph for k = 21 ---
+--- [Wed Jan  3 15:57:39 2018] Assembling contigs from SdBG for k = 21 ---
+slurmstepd: error: *** JOB 799607 ON c6-82 CANCELLED AT 2018-01-03T15:58:39 ***
+slurmstepd: error: *** JOB 799608 ON c6-82 CANCELLED AT 2018-01-03T15:58:43 ***

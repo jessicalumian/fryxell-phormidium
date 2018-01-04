@@ -1,0 +1,30 @@
+[Wed Jan  3 15:54:47 2018] Building DAG of jobs...
+[Wed Jan  3 15:54:47 2018] Provided cores: 4
+[Wed Jan  3 15:54:47 2018] Rules claiming more threads will be scaled down.
+[Wed Jan  3 15:54:47 2018] Job counts:
+[Wed Jan  3 15:54:47 2018] 	count	jobs
+[Wed Jan  3 15:54:47 2018] 	1	assemble_lab
+[Wed Jan  3 15:54:47 2018] 	1
+
+[Wed Jan  3 15:54:47 2018] rule assemble_lab:
+[Wed Jan  3 15:54:47 2018]     input: output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_001_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_002_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_003_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_004_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_005_paired_trim_interleaved.fastq, output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_006_paired_trim_interleaved.fastq
+[Wed Jan  3 15:54:47 2018]     output: output/megahit_lab/final.contigs.fa
+[Wed Jan  3 15:54:47 2018]     jobid: 0
+
+[Wed Jan  3 15:54:47 2018] Activating conda environment /home/jemizzi/phormidium/.snakemake/conda/05b24eaf.
+62.811Gb memory in total.
+Using: 56.53Gb.
+MEGAHIT v1.1.2
+--- [Wed Jan  3 15:54:49 2018] Start assembly. Number of CPU threads 32 ---
+--- [Wed Jan  3 15:54:49 2018] Available memory: 67442937856, used: 60698644070
+--- [Wed Jan  3 15:54:49 2018] Converting reads to binaries ---
+b'    [read_lib_functions-inl.h  : 209]     Lib 0 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_001_paired_trim_interleaved.fastq): interleaved, 7743452 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 1 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_002_paired_trim_interleaved.fastq): interleaved, 7726636 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 2 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_003_paired_trim_interleaved.fastq): interleaved, 7749914 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 3 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_004_paired_trim_interleaved.fastq): interleaved, 7689426 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 4 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_005_paired_trim_interleaved.fastq): interleaved, 7705540 reads, 101 max length'
+b'    [read_lib_functions-inl.h  : 209]     Lib 5 (output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_006_paired_trim_interleaved.fastq): interleaved, 6970436 reads, 101 max length'
+b'    [utils.h                   : 126]     Real: 36.7651\tuser: 34.3123\tsys: 2.4483\tmaxrss: 155744'
+--- [Wed Jan  3 15:55:27 2018] k-max reset to: 119 ---
+--- [Wed Jan  3 15:55:27 2018] k list: 21,29,39,59,79,99,119 ---
+--- [Wed Jan  3 15:55:27 2018] Extracting solid (k+1)-mers for k = 21 ---

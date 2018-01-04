@@ -3,10 +3,9 @@
 #SBATCH -t 4:00:00
 #SBATCH --mem=1G
 
-module load anaconda
-source activate snakemake
+source modules.pel
 
-logdir=peloton/log
+logdir=log
 mkdir -p $logdir
 
 SBATCH="sbatch -l nodes=1:ppn={threads} "
@@ -16,7 +15,7 @@ SBATCH="$SBATCH -o $logdir -e $logdir peloton/log"
 snakemake --unlock
 
 snakemake                                  \
-    -j 3000                                \
+    -j 8                                   \
     --local-cores 4                        \
     --cluster-config peloton/cluster.yaml  \
     --js peloton/jobscript.sh              \

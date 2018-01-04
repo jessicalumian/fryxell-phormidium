@@ -64,7 +64,7 @@ rule assemble_lab:
     params:
         input_list=lambda w, input: ','.join(input)
     shell: '''
-        rmdir output/megahit_lab
+        rm -rf output/megahit_lab
         megahit --12 {params.input_list} -o output/megahit_lab '''
 
 rule assemble_mat:
@@ -75,7 +75,7 @@ rule assemble_mat:
     conda:
         'envs/megahit.yaml'
     shell: '''
-        rmdir outupt/megahit_mat
+        rm -fr output/megahit_mat
         megahit --12 {input} -o output/megahit_mat '''
 
 rule coassembly:
@@ -90,5 +90,5 @@ rule coassembly:
     params:
         input_list=lambda w, input: ','.join(input)
     shell: '''
-        rmdir output/megahit_coassembly
+        rm -fr output/megahit_coassembly
         megahit --12 {params.input_list} -o output/megahit_coassembly '''

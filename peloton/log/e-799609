@@ -1,0 +1,25 @@
+[Wed Jan  3 15:54:47 2018] Building DAG of jobs...
+[Wed Jan  3 15:54:47 2018] Provided cores: 2
+[Wed Jan  3 15:54:47 2018] Rules claiming more threads will be scaled down.
+[Wed Jan  3 15:54:47 2018] Job counts:
+[Wed Jan  3 15:54:47 2018] 	count	jobs
+[Wed Jan  3 15:54:47 2018] 	1	assemble_mat
+[Wed Jan  3 15:54:47 2018] 	1
+
+[Wed Jan  3 15:54:47 2018] rule assemble_mat:
+[Wed Jan  3 15:54:47 2018]     input: input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq
+[Wed Jan  3 15:54:47 2018]     output: output/megahit_mat/final.contigs.fa
+[Wed Jan  3 15:54:47 2018]     jobid: 0
+
+[Wed Jan  3 15:54:47 2018] Activating conda environment /home/jemizzi/phormidium/.snakemake/conda/05b24eaf.
+62.811Gb memory in total.
+Using: 56.53Gb.
+MEGAHIT v1.1.2
+--- [Wed Jan  3 15:54:52 2018] Start assembly. Number of CPU threads 32 ---
+--- [Wed Jan  3 15:54:52 2018] Available memory: 67442937856, used: 60698644070
+--- [Wed Jan  3 15:54:52 2018] Converting reads to binaries ---
+b'    [read_lib_functions-inl.h  : 209]     Lib 0 (input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq): interleaved, 3911904 reads, 490 max length'
+b'    [utils.h                   : 126]     Real: 7.5589\tuser: 7.0972\tsys: 0.4601\tmaxrss: 147732'
+--- [Wed Jan  3 15:55:00 2018] k list: 21,29,39,59,79,99,119,141 ---
+--- [Wed Jan  3 15:55:00 2018] Extracting solid (k+1)-mers for k = 21 ---
+--- [Wed Jan  3 16:00:54 2018] Assembling contigs from SdBG for k = 21 ---

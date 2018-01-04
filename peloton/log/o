@@ -1,0 +1,98 @@
+==========================================
+SLURM_JOB_ID = 799607
+SLURM_NODELIST = c6-82
+CUDA_VISIBLE_DEVICES = NoDevFiles
+==========================================
+==========================================
+SLURM_JOB_ID = 799608
+SLURM_NODELIST = c6-82
+CUDA_VISIBLE_DEVICES = NoDevFiles
+==========================================
+
+===========================================================================
+Job Finished
+
+Name                : snakejob.assemble_mat.3.sh
+User                : jemizzi
+Partition           : high
+Nodes               : c5-89
+Cores               : 2
+State               : FAILED
+Submit              : 2018-01-03T15:44:27
+Start               : 2018-01-03T15:44:31
+End                 : 2018-01-03T15:52:19
+Reserved walltime   : 05:00:00
+Used walltime       : 00:07:48
+Used CPU time       : 00:15:11
+% User (Computation): 99.08%
+% System (I/O)      :  0.92%
+Mem reserved        : 2G/node
+Max Mem used        : 982.83M (c5-89)
+Max Disk Write      : 2.99G (c5-89)
+Max Disk Read       : 4.78G (c5-89)
+
+===========================================================================
+Job Finished
+
+Name                : snakejob.assemble_lab.3.sh
+User                : jemizzi
+Partition           : high
+Nodes               : c5-89
+Cores               : 3
+State               : RUNNING
+Submit              : 2018-01-03T15:41:02
+Start               : 2018-01-03T15:41:22
+End                 : --
+Reserved walltime   : 10:00:00
+Used walltime       : 00:12:07
+Used CPU time       : --
+% User (Computation): --
+% System (I/O)      : --
+Mem reserved        : 5G/node
+Max Mem used        : 0.00  ()
+Max Disk Write      : 0.00  ()
+Max Disk Read       : 0.00  ()
+
+===========================================================================
+Job Finished
+
+Name                : snakejob.assemble_mat.2.sh
+User                : jemizzi
+Partition           : high
+Nodes               : c6-82
+Cores               : 2
+State               : CANCELLED,CANCELLED by 1139368
+Submit              : 2018-01-03T15:48:02
+Start               : 2018-01-03T15:48:19
+End                 : 2018-01-03T15:58:39
+Reserved walltime   : 05:00:00
+Used walltime       : 00:10:20
+Used CPU time       : --
+% User (Computation): --
+% System (I/O)      : --
+Mem reserved        : 2G/node
+Max Mem used        : 0.00  ()
+Max Disk Write      : 0.00  ()
+Max Disk Read       : 0.00  ()
+
+===========================================================================
+Job Finished
+
+Name                : snakejob.assemble_lab.3.sh
+User                : jemizzi
+Partition           : high
+Nodes               : c6-82
+Cores               : 3
+State               : CANCELLED,CANCELLED by 1139368
+Submit              : 2018-01-03T15:48:02
+Start               : 2018-01-03T15:48:19
+End                 : 2018-01-03T15:58:43
+Reserved walltime   : 10:00:00
+Used walltime       : 00:10:24
+Used CPU time       : --
+% User (Computation): --
+% System (I/O)      : --
+Mem reserved        : 5G/node
+Max Mem used        : 0.00  ()
+Max Disk Write      : 0.00  ()
+Max Disk Read       : 0.00  ()
