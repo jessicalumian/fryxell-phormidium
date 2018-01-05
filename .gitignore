@@ -1,3 +1,4 @@
 input/*
 output/*
 .snakemake/*
+peloton/log/*

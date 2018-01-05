@@ -1,4 +1,5 @@
 channels:
  - bioconda
+
 dependencies:
- - metabat=1.1.2
+ - anvio=3.0.0

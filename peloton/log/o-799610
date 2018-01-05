@@ -3,3 +3,25 @@ SLURM_JOB_ID = 799610
 SLURM_NODELIST = c5-89
 CUDA_VISIBLE_DEVICES = NoDevFiles
 ==========================================
+
+===========================================================================
+Job Finished
+
+Name                : snakejob.assemble_lab.2.sh
+User                : jemizzi
+Partition           : high
+Nodes               : c5-89
+Cores               : 3
+State               : COMPLETED
+Submit              : 2018-01-03T15:54:29
+Start               : 2018-01-03T15:54:46
+End                 : 2018-01-03T18:54:59
+Reserved walltime   : 10:00:00
+Used walltime       : 03:00:13
+Used CPU time       : 11:27:03
+% User (Computation): 99.78%
+% System (I/O)      :  0.22%
+Mem reserved        : 5G/node
+Max Mem used        : 3.67G (c5-89)
+Max Disk Write      : 19.98G (c5-89)
+Max Disk Read       : 43.20G (c5-89)

@@ -28,3 +28,34 @@ b'    [utils.h                   : 126]     Real: 36.7651\tuser: 34.3123\tsys: 2
 --- [Wed Jan  3 15:55:27 2018] k-max reset to: 119 ---
 --- [Wed Jan  3 15:55:27 2018] k list: 21,29,39,59,79,99,119 ---
 --- [Wed Jan  3 15:55:27 2018] Extracting solid (k+1)-mers for k = 21 ---
+--- [Wed Jan  3 16:09:04 2018] Building graph for k = 21 ---
+--- [Wed Jan  3 16:11:32 2018] Assembling contigs from SdBG for k = 21 ---
+--- [Wed Jan  3 16:20:13 2018] Local assembling k = 21 ---
+--- [Wed Jan  3 16:33:25 2018] Extracting iterative edges from k = 21 to 29 ---
+--- [Wed Jan  3 16:40:55 2018] Building graph for k = 29 ---
+--- [Wed Jan  3 16:43:06 2018] Assembling contigs from SdBG for k = 29 ---
+--- [Wed Jan  3 16:50:39 2018] Local assembling k = 29 ---
+--- [Wed Jan  3 17:04:56 2018] Extracting iterative edges from k = 29 to 39 ---
+--- [Wed Jan  3 17:11:46 2018] Building graph for k = 39 ---
+--- [Wed Jan  3 17:13:49 2018] Assembling contigs from SdBG for k = 39 ---
+--- [Wed Jan  3 17:21:29 2018] Local assembling k = 39 ---
+--- [Wed Jan  3 17:37:48 2018] Extracting iterative edges from k = 39 to 59 ---
+--- [Wed Jan  3 17:43:13 2018] Building graph for k = 59 ---
+--- [Wed Jan  3 17:45:22 2018] Assembling contigs from SdBG for k = 59 ---
+--- [Wed Jan  3 17:51:56 2018] Local assembling k = 59 ---
+--- [Wed Jan  3 18:06:22 2018] Extracting iterative edges from k = 59 to 79 ---
+--- [Wed Jan  3 18:08:56 2018] Building graph for k = 79 ---
+--- [Wed Jan  3 18:10:11 2018] Assembling contigs from SdBG for k = 79 ---
+--- [Wed Jan  3 18:14:42 2018] Local assembling k = 79 ---
+--- [Wed Jan  3 18:28:34 2018] Extracting iterative edges from k = 79 to 99 ---
+--- [Wed Jan  3 18:29:50 2018] Building graph for k = 99 ---
+--- [Wed Jan  3 18:30:50 2018] Assembling contigs from SdBG for k = 99 ---
+--- [Wed Jan  3 18:35:40 2018] Local assembling k = 99 ---
+--- [Wed Jan  3 18:49:34 2018] Extracting iterative edges from k = 99 to 119 ---
+--- [Wed Jan  3 18:49:37 2018] Building graph for k = 119 ---
+--- [Wed Jan  3 18:50:33 2018] Assembling contigs from SdBG for k = 119 ---
+--- [Wed Jan  3 18:54:58 2018] Merging to output final contigs ---
+--- [STAT] 106938 contigs, total 128065892 bp, min 200 bp, max 453811 bp, avg 1198 bp, N50 1992 bp
+--- [Wed Jan  3 18:54:59 2018] ALL DONE. Time elapsed: 10809.813484 seconds ---
+[Wed Jan  3 18:54:59 2018] Finished job 0.
+[Wed Jan  3 18:54:59 2018] 1 of 1 steps (100%) done

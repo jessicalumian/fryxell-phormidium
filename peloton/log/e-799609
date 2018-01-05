@@ -23,3 +23,25 @@ b'    [utils.h                   : 126]     Real: 7.5589\tuser: 7.0972\tsys: 0.4
 --- [Wed Jan  3 15:55:00 2018] k list: 21,29,39,59,79,99,119,141 ---
 --- [Wed Jan  3 15:55:00 2018] Extracting solid (k+1)-mers for k = 21 ---
 --- [Wed Jan  3 16:00:54 2018] Assembling contigs from SdBG for k = 21 ---
+--- [Wed Jan  3 16:07:04 2018] Local assembling k = 21 ---
+--- [Wed Jan  3 16:30:38 2018] Extracting iterative edges from k = 21 to 29 ---
+--- [Wed Jan  3 16:34:15 2018] Building graph for k = 29 ---
+--- [Wed Jan  3 16:38:42 2018] Assembling contigs from SdBG for k = 29 ---
+--- [Wed Jan  3 16:50:05 2018] Local assembling k = 29 ---
+--- [Wed Jan  3 17:12:51 2018] Extracting iterative edges from k = 29 to 39 ---
+--- [Wed Jan  3 17:17:15 2018] Building graph for k = 39 ---
+--- [Wed Jan  3 17:22:21 2018] Assembling contigs from SdBG for k = 39 ---
+--- [Wed Jan  3 17:36:35 2018] Local assembling k = 39 ---
+--- [Wed Jan  3 18:08:23 2018] Extracting iterative edges from k = 39 to 59 ---
+--- [Wed Jan  3 18:11:46 2018] Building graph for k = 59 ---
+--- [Wed Jan  3 18:16:00 2018] Assembling contigs from SdBG for k = 59 ---
+--- [Wed Jan  3 18:26:30 2018] Local assembling k = 59 ---
+--- [Wed Jan  3 19:00:25 2018] Extracting iterative edges from k = 59 to 79 ---
+--- [Wed Jan  3 19:02:35 2018] Building graph for k = 79 ---
+--- [Wed Jan  3 19:05:33 2018] Assembling contigs from SdBG for k = 79 ---
+--- [Wed Jan  3 19:16:47 2018] Local assembling k = 79 ---
+--- [Wed Jan  3 19:55:52 2018] Extracting iterative edges from k = 79 to 99 ---
+--- [Wed Jan  3 19:58:26 2018] Building graph for k = 99 ---
+--- [Wed Jan  3 20:01:29 2018] Assembling contigs from SdBG for k = 99 ---
+--- [Wed Jan  3 20:12:23 2018] Local assembling k = 99 ---
+slurmstepd: error: *** JOB 799609 ON c5-89 CANCELLED AT 2018-01-03T20:54:55 DUE TO TIME LIMIT ***
