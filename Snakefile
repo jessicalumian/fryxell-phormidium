@@ -1,3 +1,6 @@
+# update rule all
+# add quast rule (and add to rule all?)
+
 rule all:
     input:
         'output/megahit_lab/final.contigs.fa',
@@ -92,3 +95,47 @@ rule coassembly:
     shell: '''
         rm -fr output/megahit_coassembly
         megahit --12 {params.input_list} -o output/megahit_coassembly '''
+
+rule anvio_reform_fasta:
+    input:
+        'output/megahit_{sample_type}/final.contigs.fa'
+    output:
+        fixed_contigs='output/anvio_reform_fasta/{sample_type}/contigs_fixed.fa',
+        report='output/anvio_reform_fasta/{sample_type}/name_conversions.txt'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        anvi-script-reformat-fasta {input} -o {fixed_contigs} --min-len 2000 --simplify-names --report {report} '''
+
+rule anvio_bowtie_build:
+    input:
+        'output/anvio_reform_fasta/{sample_type}/contigs_fixed.fa'
+    output:
+        'output/anvio_bowtie_build/{sample_type}/contigs_fixed'
+    conda:
+        'envs/anvio.yaml'
+    shell:
+        '''
+            bowtie2-build {input} {output} '''
+
+rule anvio_map_lab_mat:
+    input:
+        raw='input/{sample_dir}/{sample_name}.fastq',
+        assembled='output_anvio_bowtie_build/{sample_type}/contigs_fixed',
+        sam_name='output_anvio_bowtie_build/{sample_type}'
+    output:
+        'output/anvio_map_lab_mat/{sample_dir}/{sample_name}.bam'
+    conda:
+        'envs/anvio.yaml'
+    shell:
+        '''
+            bowtie2 --threads 8 {assembed} interleaved {raw} -S {sam_name}
+            samtools view -U 4 bs {sam_name} > {output} '''
+
+rule anvio_map_coassembly:
+    input:
+        raw='input/{sample_dir}/*.fastq',
+        assembled='output_anvio_bowtie_build/coassembly'
+    output:
+    conda:
+    shell:
