@@ -1,11 +1,10 @@
-# update rule all
 # add quast rule (and add to rule all?)
 
 rule all:
     input:
-        'output/megahit_lab/final.contigs.fa',
-        'output/megahit_mat/final.contigs.fa',
-        'output/megahit_coassembly/final.contigs.fa'
+        'output/anvio_reform_fasta/mat/contigs_fixed.fa',
+        'output/anvio_reform_fasta/lab/contigs_fixed.fa',
+        'output/anvio_reform_fasta/coassembly/contigs_fixed.fa'
 
 rule fastqc_reads:
     input:
@@ -105,7 +104,7 @@ rule anvio_reform_fasta:
     conda:
         'envs/anvio.yaml'
     shell: '''
-        anvi-script-reformat-fasta {input} -o {fixed_contigs} --min-len 2000 --simplify-names --report {report} '''
+        anvi-script-reformat-fasta {input} -o {output.fixed_contigs} --min-len 2000 --simplify-names --report {output.report} '''
 
 rule anvio_bowtie_build:
     input:
@@ -132,10 +131,3 @@ rule anvio_map_lab_mat:
             bowtie2 --threads 8 {assembed} interleaved {raw} -S {sam_name}
             samtools view -U 4 bs {sam_name} > {output} '''
 
-rule anvio_map_coassembly:
-    input:
-        raw='input/{sample_dir}/*.fastq',
-        assembled='output_anvio_bowtie_build/coassembly'
-    output:
-    conda:
-    shell:
