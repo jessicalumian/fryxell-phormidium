@@ -2,9 +2,7 @@
 
 rule all:
     input:
-        'output/anvio_reform_fasta/mat/contigs_fixed.fa',
-        'output/anvio_reform_fasta/lab/contigs_fixed.fa',
-        'output/anvio_reform_fasta/coassembly/contigs_fixed.fa'
+        dynamic('output/anvio_bowtie_build_mat/contigs_fixed/anvio-contigs.db.{mat_version}')
 
 rule fastqc_reads:
     input:
@@ -55,7 +53,7 @@ rule interleave_lab_sample:
     shell: '''
         interleave-reads.py {input.forward_paired} {input.reverse_paired} -o {output.interleave_out} '''
 
-rule assemble_lab:
+rule megahit_lab:
     input: 
         expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
                 lane=range(1,7))
@@ -69,7 +67,7 @@ rule assemble_lab:
         rm -rf output/megahit_lab
         megahit --12 {params.input_list} -o output/megahit_lab '''
 
-rule assemble_mat:
+rule megahit_mat:
     input:
         'input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
     output:
@@ -80,7 +78,7 @@ rule assemble_mat:
         rm -fr output/megahit_mat
         megahit --12 {input} -o output/megahit_mat '''
 
-rule coassembly:
+rule megahit_coassembly:
     input:
         expand('output/interleave_lab_sample/lab_sample_39872_GTGAAA_L002_00{lane}_paired_trim_interleaved.fastq',
                 lane=range(1,7)),
@@ -106,28 +104,14 @@ rule anvio_reform_fasta:
     shell: '''
         anvi-script-reformat-fasta {input} -o {output.fixed_contigs} --min-len 2000 --simplify-names --report {output.report} '''
 
-rule anvio_bowtie_build:
+rule anvio_bowtie_build_mat:
     input:
-        'output/anvio_reform_fasta/{sample_type}/contigs_fixed.fa'
+        'output/anvio_reform_fasta/mat/contigs_fixed.fa'
     output:
-        'output/anvio_bowtie_build/{sample_type}/contigs_fixed'
+        dynamic('output/anvio_bowtie_build_mat/contigs_fixed/anvio-contigs.db.{mat_version}')
     conda:
         'envs/anvio.yaml'
     shell:
         '''
             bowtie2-build {input} {output} '''
-
-rule anvio_map_lab_mat:
-    input:
-        raw='input/{sample_dir}/{sample_name}.fastq',
-        assembled='output_anvio_bowtie_build/{sample_type}/contigs_fixed',
-        sam_name='output_anvio_bowtie_build/{sample_type}'
-    output:
-        'output/anvio_map_lab_mat/{sample_dir}/{sample_name}.bam'
-    conda:
-        'envs/anvio.yaml'
-    shell:
-        '''
-            bowtie2 --threads 8 {assembed} interleaved {raw} -S {sam_name}
-            samtools view -U 4 bs {sam_name} > {output} '''
 
