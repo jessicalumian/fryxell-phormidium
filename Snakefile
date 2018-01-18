@@ -2,7 +2,7 @@
 
 rule all:
     input:
-        dynamic('output/anvio_bowtie_build_mat/contigs_fixed/anvio-contigs.db.{mat_version}')
+        'output/anvio_bowtie_build_mat/contigs_fixed/anvio-contigs.db.1'
 
 rule fastqc_reads:
     input:
