@@ -1,3 +1,4 @@
+ifjaldf
 # add quast rule (and add to rule all?)
 
 rule all:
