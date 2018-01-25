@@ -17,3 +17,15 @@ assemble_mat:
 coassembly:
     mem: 8G
     time: '15:00:00'
+
+bowtie2_samtools_map_mat:
+    mem: 2G
+    time: '02:00:00'
+
+bowtie2_samtools_map_lab:
+    mem: 4G
+    time: '02:00:00'
+
+bowtie2_samtools_map_coassembly:
+    mem: 6G
+    time: '04:00:00' 

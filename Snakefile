@@ -2,7 +2,9 @@
 
 rule all:
     input:
-        'output/anvio_bowtie_build_mat/contigs_fixed/anvio-contigs.db.1'
+        'output/convert_bam_anvio/mat/mat_con.bam.bai',
+        'output/convert_bam_anvio/lab/lab_con.bam.bai',
+        'output/convert_bam_anvio/coassembly/coassembly_con.bam.bai'
 
 rule fastqc_reads:
     input:
@@ -104,14 +106,70 @@ rule anvio_reform_fasta:
     shell: '''
         anvi-script-reformat-fasta {input} -o {output.fixed_contigs} --min-len 2000 --simplify-names --report {output.report} '''
 
-rule anvio_bowtie_build_mat:
+rule anvio_bowtie_build:
     input:
         'output/anvio_reform_fasta/mat/contigs_fixed.fa'
     output:
-        dynamic('output/anvio_bowtie_build_mat/contigs_fixed/anvio-contigs.db.{mat_version}')
+        dynamic('output/anvio_bowtie_build/{sample_type}/contigs_fixed/anvio-contigs.db.{version}')
     conda:
         'envs/anvio.yaml'
     shell:
         '''
             bowtie2-build {input} {output} '''
 
+rule bowtie2_samtools_map_mat:
+    input:
+        raw_reads='input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
+    output:
+        sam='output/bowtie2_samtools_map_mat/mat.sam',
+        bam='output/bowtie2_samtools_map_mat/mat.bam'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        bowtie2 --threads 8 -x output/anvio_bowtie_build/mat/contigs_fixed/anvio-contigs.db.1 -U {input.raw_reads} -S {output.sam}
+        samtools view -U 4 -bS {output.sam} > {output.bam} '''
+
+rule bowtie2_samtools_map_lab:
+    input:
+        forward=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}.fastq',
+                        lane=range(1,7)),
+        reverse=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}.fastq',
+                        lane=range(1,7))
+    output:
+        sam='output/bowtie2_samtools_map_lab/lab.sam',
+        bam='output/bowtie2_samtools_map_lab/lab.bam'
+    conda:
+        'envs/anvio.yaml'
+    params:
+        input_list=lambda w, input: ','.join(input)
+    shell: ''' 
+        bowtie2 --threads 8 -x output/anvio_bowtie_build/lab/contigs_fixed/anvio-contigs.db.1 -U {params.input_list} -S {output.sam}
+        samtools view -U 4 -bS {output.sam} > {output.bam} '''
+
+rule bowtie2_samtools_map_coassembly:
+    input:
+        forward=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}.fastq',
+                        lane=range(1,7)),
+        reverse=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}.fastq',
+                        lane=range(1,7)),
+        mat='input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
+    output:
+        sam='output/bowtie2_samtools_map_coassembly/coassembly.sam',
+        bam='output/bowtie2_samtools_map_coassembly/coassembly.bam'
+    conda:
+        'envs/anvio.yaml'
+    params:
+        input_list=lambda w, input: ','.join(input)
+    shell: '''
+        bowtie2 --threads 8 -x output/anvio_bowtie_build/coassembly/contigs_fixed/anvio-contigs.db.1 -U {params.input_list} -S {output.sam}
+        samtools view -U 4 -bS {output.sam} > {output.bam} '''
+
+rule convert_bam_anvio:
+    input:
+        'output/bowtie2_samtools_map_{sample}/{sample}.bam'
+    output:
+        'output/convert_bam_anvio/{sample}/{sample}_con.bam.bai'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        anvi-init-bam {input} '''
