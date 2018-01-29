@@ -2,6 +2,9 @@
 
 rule all:
     input:
+        'output/04_anvio/mat/mat.bam-sorted.bam.bai',
+        'output/04_anvio/lab/lab.bam-sorted.bam.bai',
+        'output/04_anvio/coassembly/coassembly.bam-sorted.bam.bai',
         'output/04_anvio/mat/anvio_contigs.db',
         'output/04_anvio/lab/anvio_contigs.db',
         'output/04_anvio/coassembly/anvio_contigs.db'
@@ -111,11 +114,13 @@ rule anvio_bowtie_build:
         'output/04_anvio/{sample}/contigs_fixed.fa'
     output:
         dynamic('output/04_anvio/{sample}/contigs_fixed/anvio-contigs.db.{version}')
+    params:
+       bt2_base='output/04_anvio/{sample}/contigs_fixed/anvio-contigs' 
     conda:
         'envs/anvio.yaml'
     shell:
         '''
-            bowtie2-build {input} {output} '''
+            bowtie2-build {input} {params.bt2_base} '''
 
 rule bowtie2_samtools_map_mat:
     input:
@@ -179,7 +184,9 @@ rule anvi_gen_contigs_database:
         'output/04_anvio/{sample}/contigs_fixed.fa'
     output:
         'output/04_anvio/{sample}/anvio_contigs.db'
+    params:
+        '{sample}'
     conda:
         'envs/anvio.yaml'
     shell: '''
-        anvi-gen-contigs-database -f {input} -o {output} '''
+        anvi-gen-contigs-database -f {input} -n {params} -o {output} '''
