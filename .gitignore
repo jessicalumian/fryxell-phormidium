@@ -2,3 +2,4 @@ input/*
 output/*
 .snakemake/*
 peloton/log/*
+.fake_snakemake/*

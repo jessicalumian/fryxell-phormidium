@@ -28,4 +28,16 @@ bowtie2_samtools_map_lab:
 
 bowtie2_samtools_map_coassembly:
     mem: 6G
-    time: '04:00:00' 
+    time: '04:00:00'
+
+convert_bam_anvio:
+    mem: 6G
+    time: '10:00:00'
+
+run_hmms:
+    mem: 6G
+    time: '10:00:00'
+
+anvi_profile:
+    mem: 12G
+    time: '10:00:00'

@@ -5,9 +5,23 @@ rule all:
         'output/04_anvio/mat/mat.bam-sorted.bam.bai',
         'output/04_anvio/lab/lab.bam-sorted.bam.bai',
         'output/04_anvio/coassembly/coassembly.bam-sorted.bam.bai',
-        'output/04_anvio/mat/anvio_contigs.db',
-        'output/04_anvio/lab/anvio_contigs.db',
-        'output/04_anvio/coassembly/anvio_contigs.db'
+        'output/04_anvio/mat/anvio-contigs.1.bt2',
+        'output/04_anvio/lab/anvio-contigs.1.bt2',
+        'output/04_anvio/coassembly/anvio-contigs.1.bt2',
+        'output/04_anvio/mat/mat_HMMs/Rinke_et_al/genes.txt',
+        'output/04_anvio/mat/mat_HMMs/Campbell_et_al/genes.txt',
+        'output/04_anvio/mat/mat_HMMs/Ribosomal_RNAs/genes.txt',
+        'output/04_anvio/lab/lab_HMMs/Rinke_et_al/genes.txt',
+        'output/04_anvio/lab/lab_HMMs/Campbell_et_al/genes.txt',
+        'output/04_anvio/lab/lab_HMMs/Ribosomal_RNAs/genes.txt',
+        'output/04_anvio/coassembly/coassembly_HMMs/Rinke_et_al/genes.txt',
+        'output/04_anvio/coassembly/coassembly_HMMs/Campbell_et_al/genes.txt',
+        'output/04_anvio/coassembly/coassembly_HMMs/Ribosomal_RNAs/genes.txt',
+        'output/04_anvio/lab/lab_ANVIO-PROFILE/PROFILE.db',
+        'output/04_anvio/mat/mat_ANVIO-PROFILE/PROFILE.db',
+        'output/04_anvio/coassembly/coassembly_ANVIO-PROFILE/PROFILE.db',
+        'output/04_anvio/merged_lab_mat_coassembly/PROFILE.db',
+        'output/04_anvio/mat/SUMMARY/general_bins_summary.txt'
 
 rule fastqc_reads:
     input:
@@ -113,9 +127,9 @@ rule anvio_bowtie_build:
     input:
         'output/04_anvio/{sample}/contigs_fixed.fa'
     output:
-        dynamic('output/04_anvio/{sample}/contigs_fixed/anvio-contigs.db.{version}')
+        'output/04_anvio/{sample}/anvio-contigs.1.bt2'
     params:
-       bt2_base='output/04_anvio/{sample}/contigs_fixed/anvio-contigs' 
+       bt2_base='output/04_anvio/{sample}/anvio-contigs' 
     conda:
         'envs/anvio.yaml'
     shell:
@@ -130,8 +144,10 @@ rule bowtie2_samtools_map_mat:
         bam='output/04_anvio/mat/mat.bam'
     conda:
         'envs/anvio.yaml'
+    params:
+        bt2_base='output/04_anvio/mat/anvio-contigs'
     shell: '''
-        bowtie2 --threads 8 -x output/04_anvio/mat/contigs_fixed/anvio-contigs.db.1 -U {input.raw_reads} -S {output.sam}
+        bowtie2 --threads 8 -x {params.bt2_base} -U {input.raw_reads} -S {output.sam}
         samtools view -U 4 -bS {output.sam} > {output.bam} '''
 
 rule bowtie2_samtools_map_lab:
@@ -146,9 +162,10 @@ rule bowtie2_samtools_map_lab:
     conda:
         'envs/anvio.yaml'
     params:
-        input_list=lambda w, input: ','.join(input)
+        input_list=lambda w, input: ','.join(input),
+        bt2_base='output/04_anvio/lab/anvio-contigs'
     shell: ''' 
-        bowtie2 --threads 8 -x output/04_anvio/lab/contigs_fixed/anvio-contigs.db.1 -U {params.input_list} -S {output.sam}
+        bowtie2 --threads 8 -x {params.bt2_base} -U {params.input_list} -S {output.sam}
         samtools view -U 4 -bS {output.sam} > {output.bam} '''
 
 rule bowtie2_samtools_map_coassembly:
@@ -164,9 +181,10 @@ rule bowtie2_samtools_map_coassembly:
     conda:
         'envs/anvio.yaml'
     params:
-        input_list=lambda w, input: ','.join(input)
+        input_list=lambda w, input: ','.join(input),
+        bt2_base='output/04_anvio/coassembly/anvio-contigs'
     shell: '''
-        bowtie2 --threads 8 -x output/04_anvio/coassembly/contigs_fixed/anvio-contigs.db.1 -U {params.input_list} -S {output.sam}
+        bowtie2 --threads 8 -x {params.bt2_base} -U {params.input_list} -S {output.sam}
         samtools view -U 4 -bS {output.sam} > {output.bam} '''
 
 rule convert_bam_anvio:
@@ -190,3 +208,51 @@ rule anvi_gen_contigs_database:
         'envs/anvio.yaml'
     shell: '''
         anvi-gen-contigs-database -f {input} -n {params} -o {output} '''
+
+rule run_hmms:
+    input:
+        'output/04_anvio/{sample}/anvio_contigs.db'
+    output:
+        'output/04_anvio/{sample}/{sample}_HMMs/Rinke_et_al/genes.txt',
+        'output/04_anvio/{sample}/{sample}_HMMs/Campbell_et_al/genes.txt',
+        'output/04_anvio/{sample}/{sample}_HMMs/Ribosomal_RNAs/genes.txt'
+    params:
+        org_dir='.snakemake/conda/da60b80a/lib/python3.5/site-packages/anvio/data/hmm',
+        cor_output='output/04_anvio/{sample}/{sample}_HMMs'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        anvi-run-hmms -c {input} --num-threads 28 
+        mkdir -p {params.cor_output}
+        cp -r {params.org_dir}/Rinke_et_al {params.cor_output} 
+        cp -r {params.org_dir}/Campbell_et_al {params.cor_output}
+        cp -r {params.org_dir}/Ribosomal_RNAs {params.cor_output} '''
+
+rule anvi_profile:
+    input:
+        bam='output/04_anvio/{sample}/{sample}.bam-sorted.bam',
+        db='output/04_anvio/{sample}/anvio_contigs.db'
+    output:
+        'output/04_anvio/{sample}/{sample}_ANVIO-PROFILE/AUXILIARY-DATA.h5',
+        'output/04_anvio/{sample}/{sample}_ANVIO-PROFILE/PROFILE.db'
+    params:
+        out_dir='output/04_anvio/{sample}/{sample}_ANVIO-PROFILE',
+        sam_name='{sample}'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        rm -fr {params.out_dir}
+        anvi-profile -i {input.bam} -c {input.db} -T 28 -o {params.out_dir} -S {params.sam_name} '''
+
+rule anvi-summarize_mat:
+    input:
+        prof='output/04_anvio/mat/mat_ANVIO-PROFILE/PROFILE.db',
+        db='output/04_anvio/mat/anvio_contigs.db'
+    output:
+        outdir='output/04_anvio/mat/SUMMARY/general_bins_summary.txt'
+    params:
+        out_dir='output/04_anvio/mat/SUMMARY/'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        anvi-summarize -p {input.prof} -c {input.db} -o {params.out_dir} -C CONCOCT '''
