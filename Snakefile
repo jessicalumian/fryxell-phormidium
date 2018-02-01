@@ -20,8 +20,12 @@ rule all:
         'output/04_anvio/lab/lab_ANVIO-PROFILE/PROFILE.db',
         'output/04_anvio/mat/mat_ANVIO-PROFILE/PROFILE.db',
         'output/04_anvio/coassembly/coassembly_ANVIO-PROFILE/PROFILE.db',
-        'output/04_anvio/merged_lab_mat_coassembly/PROFILE.db',
-        'output/04_anvio/mat/SUMMARY/general_bins_summary.txt'
+        'output/04_anvio/merged_mat_lab_coassembly/mat/anvio-contigs.1.bt2',
+        'output/04_anvio/merged_mat_lab_coassembly/lab/anvio-contigs.1.bt2',
+        'output/04_anvio/merged_mat_lab_coassembly/lab/lab.sam',
+        'output/04_anvio/merged_mat_lab_coassembly/mat/mat.sam',
+        'output/04_anvio/merged_mat_lab_coassembly/lab/lab.bam-sorted.bam.bai',
+        'output/04_anvio/merged_mat_lab_coassembly/mat/mat.bam-sorted.bam.bai'
 
 rule fastqc_reads:
     input:
@@ -136,6 +140,22 @@ rule anvio_bowtie_build:
         '''
             bowtie2-build {input} {params.bt2_base} '''
 
+rule MERGE_anvio_bowtie_build:
+    input:
+        mat='output/04_anvio/mat/contigs_fixed.fa',
+        lab='output/04_anvio/lab/contigs_fixed.fa'
+    output:
+        'output/04_anvio/merged_mat_lab_coassembly/mat/anvio-contigs.1.bt2',
+        'output/04_anvio/merged_mat_lab_coassembly/lab/anvio-contigs.1.bt2'
+    params:
+        bt2_base_mat='output/04_anvio/merged_mat_lab_coassembly/mat/anvio-contigs',
+        bt2_base_lab='output/04_anvio/merged_mat_lab_coassembly/lab/anvio-contigs'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        bowtie2-build {input.mat} {params.bt2_base_mat}
+        bowtie2-build {input.lab} {params.bt2_base_lab} '''
+
 rule bowtie2_samtools_map_mat:
     input:
         raw_reads='input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
@@ -148,6 +168,38 @@ rule bowtie2_samtools_map_mat:
         bt2_base='output/04_anvio/mat/anvio-contigs'
     shell: '''
         bowtie2 --threads 8 -x {params.bt2_base} -U {input.raw_reads} -S {output.sam}
+        samtools view -U 4 -bS {output.sam} > {output.bam} '''
+
+rule MERGE_bowtie2_samtools_map_mat:
+    input:
+        raw_reads='input/mat_sample/mat_sample_104_ABC_L00_R12_0.fastq'
+    output:
+        sam='output/04_anvio/merged_mat_lab_coassembly/mat/mat.sam',
+        bam='output/04_anvio/merged_mat_lab_coassembly/mat/mat.bam'
+    conda:
+        'envs/anvio.yaml'
+    params:
+        bt2_base='output/04_anvio/merged_mat_lab_coassembly/mat/anvio-contigs'
+    shell: '''
+        bowtie2 --threads 8 -x {params.bt2_base} -U {input.raw_reads} -S {output.sam}
+        samtools view -U 4 -bS {output.sam} > {output.bam} '''
+
+rule bowtie2_samtools_map_lab_merge:
+    input:
+        forward=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R1_00{lane}.fastq',
+                        lane=range(1,7)),
+        reverse=expand('input/lab_sample/lab_sample_39872_GTGAAA_L002_R2_00{lane}.fastq',
+                        lane=range(1,7))
+    output:
+        sam='output/04_anvio/merged_mat_lab_coassembly/lab/lab.sam',
+        bam='output/04_anvio/merged_mat_lab_coassembly/lab/lab.bam'
+    conda:
+        'envs/anvio.yaml'
+    params:
+        input_list=lambda w, input: ','.join(input),
+        bt2_base='output/04_anvio/merged_mat_lab_coassembly/lab/anvio-contigs'
+    shell: '''
+        bowtie2 --threads 8 -x {params.bt2_base} -U {params.input_list} -S {output.sam}
         samtools view -U 4 -bS {output.sam} > {output.bam} '''
 
 rule bowtie2_samtools_map_lab:
@@ -192,6 +244,16 @@ rule convert_bam_anvio:
         'output/04_anvio/{sample}/{sample}.bam'
     output:
         'output/04_anvio/{sample}/{sample}.bam-sorted.bam.bai'
+    conda:
+        'envs/anvio.yaml'
+    shell: '''
+        anvi-init-bam {input} '''
+
+rule MERGE_convert_bam_anvio:
+    input:
+        'output/04_anvio/merged_mat_lab_coassembly/{sample}/{sample}.bam'
+    output:
+        'output/04_anvio/merged_mat_lab_coassembly/{sample}/{sample}.bam-sorted.bam.bai'
     conda:
         'envs/anvio.yaml'
     shell: '''
@@ -244,15 +306,16 @@ rule anvi_profile:
         rm -fr {params.out_dir}
         anvi-profile -i {input.bam} -c {input.db} -T 28 -o {params.out_dir} -S {params.sam_name} '''
 
-rule anvi-summarize_mat:
+rule merge_lab_mat_coassembly:
     input:
-        prof='output/04_anvio/mat/mat_ANVIO-PROFILE/PROFILE.db',
-        db='output/04_anvio/mat/anvio_contigs.db'
+        lab_prof='output/04_anvio/lab/lab_ANVIO-PROFILE/PROFILE.db',
+        mat_prof='output/04_anvio/mat/mat_ANVIO-PROFILE/PROFILE.db',
+        coassembly_db='output/04_anvio/coassembly/anvio_contigs.db'
     output:
-        outdir='output/04_anvio/mat/SUMMARY/general_bins_summary.txt'
+        'output/04_anvio/merged_lab_mat_coassembly/PROFILE.db'
     params:
-        out_dir='output/04_anvio/mat/SUMMARY/'
+        output_dir='output/04_anvio/merged_lab_coassembly'
     conda:
         'envs/anvio.yaml'
     shell: '''
-        anvi-summarize -p {input.prof} -c {input.db} -o {params.out_dir} -C CONCOCT '''
+        anvi-merge {input.lab_prof} {input.mat_prof} -o {params.output_dir} -c {input.coassembly_db} --enforce-hierarchical-clustering '''

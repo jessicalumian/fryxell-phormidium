@@ -18,6 +18,18 @@ megahit_coassembly:
     mem: 10G
     time: '15:00:00'
 
+anvio_bowtie_build_merge:
+    mem: 3G
+    time: '03:00:00'
+
+bowtie2_samtools_map_lab_merge:
+    mem: 4G
+    time: '04:00:00'
+
+bowtie2_samtools_map_mat_merge:
+    mem: 4G
+    time: '04:00:00'
+
 bowtie2_samtools_map_mat:
     mem: 2G
     time: '02:00:00'
