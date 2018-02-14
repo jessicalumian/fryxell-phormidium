@@ -22,11 +22,11 @@ anvio_bowtie_build_merge:
     mem: 3G
     time: '03:00:00'
 
-bowtie2_samtools_map_lab_merge:
+MERGE_bowtie2_samtools_map_lab:
     mem: 4G
     time: '04:00:00'
 
-bowtie2_samtools_map_mat_merge:
+MERGE_bowtie2_samtools_map_mat:
     mem: 4G
     time: '04:00:00'
 
@@ -46,6 +46,10 @@ convert_bam_anvio:
     mem: 6G
     time: '10:00:00'
 
+MERGE_convert_bam_anvio:
+    mem: 6G
+    time: '10:00:00'
+
 run_hmms:
     mem: 6G
     time: '10:00:00'
@@ -53,3 +57,15 @@ run_hmms:
 anvi_profile:
     mem: 12G
     time: '10:00:00'
+
+MERGE_anvi_profile:
+    mem: 12G
+    time: '08:00:00'
+
+MERGE_lab_mat_coassembly:
+    mem: 6G
+    time: '05:00:00'
+
+MERGE_anvi_summarize:
+    mem: 6G
+    time: '05:00:00'
