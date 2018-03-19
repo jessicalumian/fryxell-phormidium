@@ -2,7 +2,7 @@
 #
 #SBATCH --job-name=02_humann2_outgen_bin20
 #SBATCH -t 10:00:00
-#SBATCH --mem=6G
+#SBATCH --mem=12G
 #SBATCH -o /home/jemizzi/phormidium/output/humann2_scripts/02_outgen_bin20.out
 #SBATCH -e /home/jemizzi/phormidium/output/humann2_scripts/02_outgen_bin20.err
 #SBATCH --mail-user=jemizzi@ucdavis.edu
