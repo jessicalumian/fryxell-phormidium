@@ -1,0 +1,25 @@
+RAxML-HPC2 on XSEDE - Parameters
+
+ascertainment_corr_	lewis
+bootstop_	100
+bootstrap_seed_	true
+bootstrap_seed_val_	12345
+convergence_criterion_	false
+datatype_	protein
+disable_seqcheck_	false
+intermediate_treefiles_	false
+mesquite_output_	false
+mlsearch_	true
+more_memory_	false
+mulcustom_aa_matrices_	false
+no_bfgs_	false
+outsuffix_	result
+parsimony_seed_val_	12345
+printbrlength_	false
+prot_matrix_spec_	DAYHOFF
+prot_sub_model_	PROTCAT
+provide_parsimony_seed_	true
+rearrangement_yes_	false
+runtime_	1
+specify_bootstraps_	true
+use_apobootstopping_	false
