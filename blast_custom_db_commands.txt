@@ -1,0 +1,13 @@
+# make custom database of D1ref.fa D1 sequence downloaded from NCBI
+
+makeblastdb -in D1ref.fa -input_type fasta -title D1_db -out D1_db_out -dbtype prot
+
+# do blastx because prot, blastn would be nucl
+
+# search bin db
+
+blastx -db D1_db_out -query ../MEGAHIT_metagenome/final.contigs.fa -evalue 1e-5 -outfmt "6 sseqid qseqid evalue pident qseq" -out coassembly.out
+
+# search bin 2 from MEGAHIT (phormidium bin)
+
+blastx -db D1_db_out -query ../ANVIO_PHORMIDIUM/SAMPLES-SUMMARY/bin_by_bin/Bin_2/Bin_2-contigs.fa -evalue 1e-5 -outfmt "6 sseqid qseqid evalue pident qseq" -out bin2.out
