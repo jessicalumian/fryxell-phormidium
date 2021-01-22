@@ -38,7 +38,6 @@ rule fastqc_reads:
     shell: '''
         module load fastqc/0.11.5
         fastqc -o `dirname {output[0]}` {input} '''
-# adding something here
 rule download_adapters:
     output:
         adapters='input/TruSeq3-PE-2.fa'
